@@ -20,6 +20,12 @@
 <br>
 <hr />
 
+<div align="center">
+<a href="https://linked-in-clone-liard.vercel.app"><img  src='https://user-images.githubusercontent.com/99184393/188789531-e987f621-42c0-4331-b59c-15567f672b8d.gif' alt='image'/></a>
+</div>
+
+<br />
+
 ## Available Scripts
 ```
 npx create-next-app my-project
@@ -128,5 +134,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 <hr />
 
-<a href='https://linked-in-clone-liard.vercel.app'>![image](https://user-images.githubusercontent.com/99184393/188188483-1ebbc6f9-7fb5-4a50-96ae-3e9ae0f2b396.png) ![image](https://user-images.githubusercontent.com/99184393/188189293-2f2a8212-0dcc-4143-bfb7-c31bcf18c025.png)</a>
-
+<a href='https://linked-in-clone-liard.vercel.app'>![image](https://user-images.githubusercontent.com/99184393/188188483-1ebbc6f9-7fb5-4a50-96ae-3e9ae0f2b396.png)</a>
