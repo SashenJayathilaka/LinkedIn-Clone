@@ -133,5 +133,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 <hr />
-
+ 
 <a href='https://linked-in-clone-liard.vercel.app'>![image](https://user-images.githubusercontent.com/99184393/188188483-1ebbc6f9-7fb5-4a50-96ae-3e9ae0f2b396.png)</a>
