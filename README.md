@@ -132,6 +132,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 <hr />
 
 <a href='https://linked-in-clone-liard.vercel.app'>![image](https://user-images.githubusercontent.com/99184393/188188483-1ebbc6f9-7fb5-4a50-96ae-3e9ae0f2b396.png)</a>
