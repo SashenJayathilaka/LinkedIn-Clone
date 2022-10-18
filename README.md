@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://user-images.githubusercontent.com/99184393/188185026-93637cf8-67e9-439a-b33a-6feba7b8bd21.png" alt="logo" width="200" height="auto" />
+  <img src="https://user-images.githubusercontent.com/99184393/188185026-93637cf8-67e9-439a-b33a-6feba7b8bd21.png" alt="logo" width="160" height="auto" />
   
 # LinkedIn Clone with REACT.JS!
   
