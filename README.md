@@ -1,4 +1,15 @@
+<div align="center">
+
+  <img src="https://user-images.githubusercontent.com/99184393/188185026-93637cf8-67e9-439a-b33a-6feba7b8bd21.png" alt="logo" width="200" height="auto" />
+  
 # LinkedIn Clone with REACT.JS!
+  
+  <p>
+LinkedIn Clone with React (Next.js, Tailwind CSS, Firebase v9, Recoil)
+  </p>
+  
+  
+<!-- Badges -->
 
 <a href="https://linked-in-clone-liard.vercel.app" target="_blank">![](https://img.shields.io/website-up-down-green-red/http/monip.org.svg)</a>
 ![](https://img.shields.io/badge/Maintained-Yes-indigo)
@@ -6,6 +17,37 @@
 ![](https://img.shields.io/github/stars/SashenJayathilaka/LinkedIn-Clone.svg)
 ![](https://img.shields.io/github/issues/SashenJayathilaka/LinkedIn-Clone)
 ![](https://img.shields.io/github/last-commit/SashenJayathilaka/LinkedIn-Clone)
+
+   
+<h4>
+    <a href="https://linked-in-clone-liard.vercel.app">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/LinkedIn-Clone/blob/master/README.md">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/LinkedIn-Clone/issues">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/SashenJayathilaka/LinkedIn-Clone/issues">Request Feature</a>
+  </h4>
+</div>
+
+<br />
+
+<!-- Table of Contents -->
+## :notebook_with_decorative_cover: Table of Contents
+
+- [About the Project](#star2-about-the-project)
+  * [Screenshots](#camera-screenshots)
+  * [Tech Stack](#space_invader-tech-stack)
+  * [Environment Variables](#key-environment-variables)
+- [Getting Started](#toolbox-getting-started)
+  * [Prerequisites](#bangbang-prerequisites)
+  * [Installation](#gear-installation)
+  * [Run Locally](#running-run-locally)
+  * [Deployment](#triangular_flag_on_post-deployment)
+- [Contact](#handshake-contact)
+
+<!-- About the Project -->
+## :star2: About the Project
 
 <!-- Screenshots -->
 ### :camera: Screenshots
