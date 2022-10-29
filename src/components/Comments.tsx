@@ -44,10 +44,12 @@ const Comments: React.FC<CommentsProps> = ({ id, setCommentsLength }) => {
                 name={comment.data().username}
               />
               <p className="text-sm flex-1">
-                <span className="font-bold">{comment.data().username} </span>
+                <span className="font-bold">
+                  {comment.data().username.slice(0, 6)}{" "}
+                </span>
                 {comment.data().comment}
               </p>
-              <p className="text-sm px-2">
+              <p className="text-[12px] px-2">
                 {moment(
                   new Date(comment.data().timestamp?.seconds * 1000)
                 ).fromNow()}

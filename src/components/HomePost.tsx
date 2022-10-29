@@ -54,7 +54,6 @@ const HomePost: React.FC<HomePostProps> = ({
   company,
   id,
 }) => {
-  /*   const [error, setError] = useState(false); */
   const [user] = useAuthState(auth);
   const [open, setOpen] = useState<boolean>(false);
   const [textInput, setTextInput] = useState({ title: "", body: "" });
@@ -64,6 +63,7 @@ const HomePost: React.FC<HomePostProps> = ({
   const [speed, setSpeed] = useState<number>();
   const [reactions, setReactions] = useState<any>("");
   const [secondReactions, setSecondReactions] = useState<any>("");
+  const [commentLoading, setCommentsLoading] = useState(false);
 
   useEffect(() => {
     setSpeed(Math.floor(Math.random() * 5000));
@@ -80,6 +80,7 @@ const HomePost: React.FC<HomePostProps> = ({
   };
   const sendComment = async (e: any) => {
     e.preventDefault();
+    setCommentsLoading(true);
 
     try {
       await addDoc(collection(firestore, "posts", id, "comments"), {
@@ -95,6 +96,7 @@ const HomePost: React.FC<HomePostProps> = ({
     }
 
     setTextInput({ title: "", body: "" });
+    setCommentsLoading(false);
   };
 
   useEffect(
@@ -216,37 +218,41 @@ const HomePost: React.FC<HomePostProps> = ({
       </Text>
       {image && <img src={image} className="object-cover w-full" alt="" />}
 
-      <div className="flex">
-        <div className="flex flex-1 justify-start items-start	 px-4 pt-4 pb-2 ">
-          {/*           <Icon
-            as={ThumbUpAltIcon}
-            style={{ fontSize: "15px", color: "blue" }}
-          /> */}
-          <img
-            className="w-4 h-4"
-            src="https://i.postimg.cc/tJ5zt80q/Linkedin-Like-Icon-Thumbup250.png"
-            alt=""
-          />
-          <img className="w-4 h-4" src={reactions} alt="" />
-          <img className="w-4 h-4" src={secondReactions} alt="" />
-          <Text fontSize="11px" marginLeft="2px">
-            {likes.length}
-          </Text>
-        </div>
-        <div className="flex justify-end items-end px-4 pt-4 pb-2 m-auto">
-          <Text fontSize="11px" marginLeft="2px">
-            {commentLength}
-          </Text>
-          <Text fontSize="11px" marginLeft="3px">
-            Comments .
-          </Text>
-          <Text fontSize="11px" marginLeft="2px">
-            {faker.random.numeric()}
-          </Text>
-          <Text fontSize="11px" marginLeft="3px">
-            Share .
-          </Text>
-        </div>
+      <div className="flex justify-end">
+        {likes.length > 0 && (
+          <div className="flex flex-1 justify-start items-start	 px-4 pt-4 pb-2 ">
+            <img
+              className="w-4 h-4"
+              src="https://i.postimg.cc/tJ5zt80q/Linkedin-Like-Icon-Thumbup250.png"
+              alt=""
+            />
+            {likes.length > 1 && (
+              <img className="w-4 h-4" src={reactions} alt="" />
+            )}
+            {likes.length > 2 && (
+              <img className="w-4 h-4" src={secondReactions} alt="" />
+            )}
+            <Text fontSize="11px" marginLeft="2px">
+              {likes.length}
+            </Text>
+          </div>
+        )}
+        {(commentLength as any) > 0 && (
+          <div className="flex justify-end items-end px-4 pt-4 pb-2">
+            <Text fontSize="11px" marginLeft="2px">
+              {commentLength}
+            </Text>
+            <Text fontSize="11px" marginLeft="3px">
+              Comments .
+            </Text>
+            <Text fontSize="11px" marginLeft="2px">
+              {faker.random.numeric()}
+            </Text>
+            <Text fontSize="11px" marginLeft="3px">
+              Share .
+            </Text>
+          </div>
+        )}
       </div>
 
       <hr />
@@ -381,15 +387,34 @@ const HomePost: React.FC<HomePostProps> = ({
               placeholder="Add a comment..."
               className="border-none flex-1 focus:ring-0 outline-none"
             />
-            <InsertEmoticonIcon className="mr-2" />
-            <button
-              type="submit"
-              disabled={!textInput.body}
-              onClick={sendComment}
-              className="font-semibold text-blue-400"
-            >
-              Post
-            </button>
+            <InsertEmoticonIcon className="mr-2 ml-1" />
+            {commentLoading ? (
+              <button className="font-semibold text-blue-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 animate-spin"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!textInput.body}
+                onClick={sendComment}
+                className="font-semibold text-blue-400"
+              >
+                Post
+              </button>
+            )}
           </form>
           <Comments id={id} setCommentsLength={setCommentsLength} />
         </>
