@@ -3,12 +3,15 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+
 import { auth } from "../firebase/firebase";
 
 type ProfileSideProps = {};
 
 const ProfileSide: React.FC<ProfileSideProps> = () => {
   const [user] = useAuthState(auth);
+  const router = useRouter();
   const [speed, setSpeed] = useState<number>();
 
   const logout = async () => {
@@ -18,6 +21,12 @@ const ProfileSide: React.FC<ProfileSideProps> = () => {
   useEffect(() => {
     setSpeed(Math.floor(Math.random() * 5000));
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
 
   return (
     <div className="hidden xl:inline-grid md:col-span-2">
