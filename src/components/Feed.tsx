@@ -23,7 +23,7 @@ const Feed: React.FC<FeedProps> = () => {
   //console.log(posts);
 
   return (
-    <div className="col-span-7 scrollbar-hide border-x max-h-screen overflow-scroll lg:col-span-5 mr-5">
+    <div className="col-span-full scrollbar-hide border-x max-h-screen overflow-scroll lg:col-span-5 mr-5">
       <div>
         <HomePostInput />
       </div>

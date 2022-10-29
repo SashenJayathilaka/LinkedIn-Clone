@@ -1,8 +1,22 @@
 import type { NextPage } from "next";
+import React, { useEffect } from "react";
 import Head from "next/head";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
+
 import Container from "../components/Container";
+import { auth } from "../firebase/firebase";
 
 const Home: NextPage = () => {
+  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push(`/l/home`);
+    } else return;
+  }, [user]);
+
   return (
     <div>
       <Head>
