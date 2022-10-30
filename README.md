@@ -5,7 +5,7 @@
 # LinkedIn Clone with REACT.JS!
   
   <p>
-LinkedIn Clone with React (Next.js, Tailwind CSS, Firebase v9, Recoil)
+LinkedIn Clone with React (Next.js, Tailwind CSS, Firebase v9, Recoil, Image Uploading, Google Authentication)
   </p>
   
   
