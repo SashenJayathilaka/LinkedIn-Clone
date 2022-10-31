@@ -236,6 +236,12 @@ Clone the project
   git clone https://github.com/SashenJayathilaka/LinkedIn-Clone.git
 ```
 
+change directory
+
+```bash
+  cd LinkedIn-Clone
+```
+
 Install dependencies
 
 ```bash
