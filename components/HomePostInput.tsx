@@ -1,17 +1,17 @@
 import { Avatar, Input, useDisclosure } from "@chakra-ui/react";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import EventNoteIcon from "@material-ui/icons/EventNote";
-import PhotoIcon from "@material-ui/icons/Photo";
-import YouTubeIcon from "@material-ui/icons/YouTube";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/firebase";
+
+import { BsYoutube } from "react-icons/bs";
+import { IoMdPhotos } from "react-icons/io";
+import { MdAssignment, MdEventNote } from "react-icons/md";
+
 import CreatePost from "./CreatePost";
 
 type HomePostInputProps = {};
 
 const HomePostInput: React.FC<HomePostInputProps> = () => {
-  const [user] = useAuthState(auth);
+  const { data: session }: any = useSession();
   const [speed, setSpeed] = useState<number>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -23,10 +23,10 @@ const HomePostInput: React.FC<HomePostInputProps> = () => {
     <div className="bg-white rounded-lg p-3 space-y-3 border border-gray-300 dark:border-none">
       <div className="flex items-center space-x-2">
         <Avatar
-          name={user?.displayName!}
+          name={session?.user?.name!}
           src={
-            user?.photoURL
-              ? user?.photoURL!
+            session?.user?.image
+              ? session?.user?.image!
               : `https://avatars.dicebear.com/api/avataaars/${speed}.svg`
           }
           className="!h-10 !w-10 cursor-pointer"
@@ -42,19 +42,19 @@ const HomePostInput: React.FC<HomePostInputProps> = () => {
       </div>
       <div className="flex items-center flex-wrap gap-4 justify-center md:gap-x-10">
         <button className="inputButton group">
-          <PhotoIcon className="text-blue-400" />
+          <IoMdPhotos className="text-blue-400 text-2xl" />
           <h4 className="opacity-80 group-hover:opacity-100">Photo</h4>
         </button>
         <button className="inputButton group">
-          <YouTubeIcon className="text-green-400" />
+          <BsYoutube className="text-green-400 text-2xl" />
           <h4 className="opacity-80 group-hover:opacity-100">Video</h4>
         </button>
         <button className="inputButton group">
-          <EventNoteIcon className="text-yellow-600" />
+          <MdEventNote className="text-yellow-600 text-2xl" />
           <h4 className="opacity-80 group-hover:opacity-100">Event</h4>
         </button>
         <button className="inputButton group">
-          <AssignmentIcon className="text-red-400" />
+          <MdAssignment className="text-red-400 text-2xl" />
           <h4 className="opacity-80 group-hover:opacity-100 whitespace-nowrap">
             Write Article
           </h4>

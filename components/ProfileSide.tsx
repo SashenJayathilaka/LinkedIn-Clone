@@ -1,32 +1,20 @@
 import { Avatar, Image } from "@chakra-ui/react";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import { signOut } from "firebase/auth";
+import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
 
+import { useSession } from "next-auth/react";
+import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { auth } from "../firebase/firebase";
 
 type ProfileSideProps = {};
 
 const ProfileSide: React.FC<ProfileSideProps> = () => {
-  const [user] = useAuthState(auth);
-  const router = useRouter();
+  const { data: session }: any = useSession();
   const [speed, setSpeed] = useState<number>();
-
-  const logout = async () => {
-    await signOut(auth);
-  };
 
   useEffect(() => {
     setSpeed(Math.floor(Math.random() * 5000));
   }, []);
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  }, [user]);
 
   return (
     <div className="hidden xl:inline-grid md:col-span-2">
@@ -37,20 +25,20 @@ const ProfileSide: React.FC<ProfileSideProps> = () => {
             <Image src="https://rb.gy/i26zak" />
           </div>
           <Avatar
-            name={user?.displayName!}
-            onClick={logout}
+            name={session?.user?.name!}
+            onClick={() => signOut()}
             src={
-              user?.photoURL
-                ? user?.photoURL!
+              session?.user?.image
+                ? session?.user?.image!
                 : `https://avatars.dicebear.com/api/avataaars/${speed}.svg`
             }
             className="!h-14 !w-14 !border-2 !absolute !top-4 !cursor-pointer"
           />
           <div className="mt-5 py-4 space-x-0.5">
             <h4 className="hover:underline decoration-purple-700 underline-offset-1 cursor-pointer">
-              {user?.displayName}
+              {session?.user?.name}
             </h4>
-            <p className="text-black/60 text-sm">{user?.email}</p>
+            <p className="text-black/60 text-sm">{session?.user?.email}</p>
           </div>
 
           <div className="hidden md:inline text-left text-gray-500 text-sm">
@@ -76,7 +64,7 @@ const ProfileSide: React.FC<ProfileSideProps> = () => {
             </div>
 
             <div className="sidebarButton flex items-center space-x-1.5">
-              <BookmarkIcon className="!-ml-1" />
+              <BsFillBookmarkStarFill className="!-ml-1" />
               <h4 className="text-black font-medium">My items</h4>
             </div>
           </div>

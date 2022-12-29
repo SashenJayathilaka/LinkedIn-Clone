@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -20,9 +19,6 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import PeopleIcon from "@material-ui/icons/People";
-import PublicIcon from "@material-ui/icons/Public";
 import {
   addDoc,
   collection,
@@ -32,9 +28,13 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore, storage } from "../firebase/firebase";
+
+import { BsChevronDown, BsFillPeopleFill } from "react-icons/bs";
+import { MdGroupAdd, MdPublic } from "react-icons/md";
+
+import { firestore, storage } from "../firebase/firebase";
 import useSelectFile from "../hooks/useSelectFile";
 import ModalFooterIcon from "./ModalFooterIcon";
 
@@ -45,8 +45,7 @@ type CreatePostProps = {
 };
 
 const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
-  const [user] = useAuthState(auth);
-  const [error, setError] = useState("");
+  const { data: session }: any = useSession();
   const [communityType, setCommunityType] = useState("AnyOne");
   const [hashtag, setHashtag] = useState<any>("");
   const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
@@ -67,11 +66,12 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
     setLoading(true);
     try {
       const docRef = await addDoc(collection(firestore, "posts"), {
-        username: user?.displayName,
+        userId: session?.user?.uid,
+        username: session?.user?.name,
         caption: textInput.body,
-        profileImage: user?.photoURL,
+        profileImage: session?.user?.image,
         communityType: communityType,
-        company: user?.email,
+        company: session?.user?.email,
         timestamp: serverTimestamp() as Timestamp,
       });
 
@@ -129,16 +129,16 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
 
           <Flex className="flex flex-start m-5 gap-2">
             <Avatar
-              name={user?.displayName!}
+              name={session?.user?.name!}
               src={
-                user?.photoURL
-                  ? user?.photoURL!
+                session?.user?.image
+                  ? session?.user?.image!
                   : `https://avatars.dicebear.com/api/avataaars/${speed}.svg`
               }
             />
             <Stack>
               <Text className="font-gray-600 font-bold">
-                {user?.displayName}
+                {session?.user?.name}
               </Text>
               <Menu closeOnSelect={false}>
                 <MenuButton
@@ -149,17 +149,27 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
                 >
                   {communityType === "AnyOne" ? (
                     <Icon
-                      as={PublicIcon}
+                      as={MdPublic}
                       style={{ fontSize: "18px", marginRight: "2px" }}
                     />
                   ) : (
                     <Icon
-                      as={communityType === "Twitter" ? PublicIcon : PeopleIcon}
+                      as={
+                        communityType === "Twitter"
+                          ? MdPublic
+                          : BsFillPeopleFill
+                      }
                       style={{ fontSize: "18px", marginRight: "2px" }}
                     />
                   )}
                   {communityType ? communityType : `AnyOne`}
-                  <ChevronDownIcon />
+
+                  <Icon
+                    as={BsChevronDown}
+                    style={{ fontSize: "15px", marginRight: "2px" }}
+                    className="text-center ml-2 animate-bounce"
+                  />
+                  {/*   <BsChevronDown />*/}
                 </MenuButton>
                 <MenuList minWidth="400px">
                   <Stack spacing={2} className="m-5">
@@ -172,7 +182,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
                     >
                       <Flex align="center">
                         <Icon
-                          as={PublicIcon}
+                          as={MdPublic}
                           color="gray.500"
                           mr={2}
                           ml={3}
@@ -196,7 +206,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
                     >
                       <Flex align="center">
                         <Icon
-                          as={PublicIcon}
+                          as={MdPublic}
                           color="gray.500"
                           mr={2}
                           ml={3}
@@ -220,7 +230,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
                     >
                       <Flex align="center">
                         <Icon
-                          as={PeopleIcon}
+                          as={MdPublic}
                           color="gray.500"
                           mr={2}
                           ml={3}
@@ -244,7 +254,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
                     >
                       <Flex align="center">
                         <Icon
-                          as={GroupAddIcon}
+                          as={MdGroupAdd}
                           color="gray.500"
                           mr={2}
                           ml={3}
@@ -294,9 +304,9 @@ const CreatePost: React.FC<CreatePostProps> = ({ isOpen, onClose, speed }) => {
               >
                 {/*{charsRemaining} Characters Remaining*/}
               </Text>
-              <Text fontSize="9pt" color="red" pt={1}>
+              {/*       <Text fontSize="9pt" color="red" pt={1}>
                 {error}
-              </Text>
+              </Text>*/}
             </ModalBody>
             <Button colorScheme="blue" variant="ghost" onClick={handleHashTag}>
               Add hashtag

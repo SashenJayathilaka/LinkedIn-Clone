@@ -1,10 +1,5 @@
 import { Avatar, Flex, Icon, Input, Stack, Text } from "@chakra-ui/react";
 import { faker } from "@faker-js/faker";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import MoreHorizOutlinedIcon from "@material-ui/icons/MoreHorizOutlined";
-import PeopleIcon from "@material-ui/icons/People";
-import PublicIcon from "@material-ui/icons/Public";
 import {
   addDoc,
   collection,
@@ -17,9 +12,18 @@ import {
 import { motion } from "framer-motion";
 import { shuffle } from "lodash";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../firebase/firebase";
+
+import { BsFillPeopleFill } from "react-icons/bs";
+import {
+  MdGroupAdd,
+  MdInsertEmoticon,
+  MdMoreHoriz,
+  MdPublic,
+} from "react-icons/md";
+
+import { firestore } from "../firebase/firebase";
 import Comments from "./Comments";
 
 const IconImage = [
@@ -54,7 +58,7 @@ const HomePost: React.FC<HomePostProps> = ({
   company,
   id,
 }) => {
-  const [user] = useAuthState(auth);
+  const { data: session }: any = useSession();
   const [open, setOpen] = useState<boolean>(false);
   const [textInput, setTextInput] = useState({ title: "", body: "" });
   const [commentLength, setCommentsLength] = useState();
@@ -85,9 +89,9 @@ const HomePost: React.FC<HomePostProps> = ({
     try {
       await addDoc(collection(firestore, "posts", id, "comments"), {
         comment: textInput.body,
-        username: user?.displayName,
+        username: session?.user?.name,
         userImage:
-          user?.photoURL ||
+          session?.user?.image ||
           `https://avatars.dicebear.com/api/avataaars/${speed}.svg`,
         timestamp: serverTimestamp(),
       });
@@ -108,7 +112,10 @@ const HomePost: React.FC<HomePostProps> = ({
   );
 
   useEffect(
-    () => setHasLikes(likes.findIndex((like) => like.id === user?.uid) !== -1),
+    () =>
+      setHasLikes(
+        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+      ),
     [likes]
   );
 
@@ -120,11 +127,16 @@ const HomePost: React.FC<HomePostProps> = ({
   const likePost = async () => {
     try {
       if (hasLikes) {
-        await deleteDoc(doc(firestore, "posts", id, "likes", user?.uid!));
+        await deleteDoc(
+          doc(firestore, "posts", id, "likes", session?.user?.uid!)
+        );
       } else {
-        await setDoc(doc(firestore, "posts", id, "likes", user?.uid!), {
-          username: user?.displayName,
-        });
+        await setDoc(
+          doc(firestore, "posts", id, "likes", session?.user?.uid!),
+          {
+            username: session?.user?.name,
+          }
+        );
       }
     } catch (error) {
       console.log(error);
@@ -140,7 +152,10 @@ const HomePost: React.FC<HomePostProps> = ({
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
       className="bg-white my-7 border rounded-sm"
       style={{ borderRadius: "10px" }}
     >
@@ -170,7 +185,7 @@ const HomePost: React.FC<HomePostProps> = ({
             </Text>
             {communityType === "AnyOne" ? (
               <Icon
-                as={PublicIcon}
+                as={MdPublic}
                 style={{
                   fontSize: "15px",
                   color: "gray",
@@ -181,7 +196,7 @@ const HomePost: React.FC<HomePostProps> = ({
               />
             ) : communityType === "Group" ? (
               <Icon
-                as={GroupAddIcon}
+                as={MdGroupAdd}
                 style={{
                   fontSize: "15px",
                   color: "gray",
@@ -192,7 +207,7 @@ const HomePost: React.FC<HomePostProps> = ({
               />
             ) : (
               <Icon
-                as={communityType === "Twitter" ? PublicIcon : PeopleIcon}
+                as={communityType === "Twitter" ? MdPublic : BsFillPeopleFill}
                 style={{
                   fontSize: "15px",
                   color: "gray",
@@ -205,7 +220,7 @@ const HomePost: React.FC<HomePostProps> = ({
           </Flex>
         </Stack>
         <Flex className="flex ml-80">
-          <MoreHorizOutlinedIcon className=" h-5 cursor-pointer" />
+          <MdMoreHoriz className=" h-5 cursor-pointer" />
         </Flex>
       </div>
       <Text
@@ -377,8 +392,8 @@ const HomePost: React.FC<HomePostProps> = ({
               size="md"
               className="rounded-full h-12 object-contain
         border p-1 mr-3 cursor-pointer"
-              name={user?.displayName!}
-              src={user?.photoURL!}
+              name={session?.user?.name!}
+              src={session?.user?.image!}
             />
             <Input
               name="body"
@@ -387,7 +402,7 @@ const HomePost: React.FC<HomePostProps> = ({
               placeholder="Add a comment..."
               className="border-none flex-1 focus:ring-0 outline-none"
             />
-            <InsertEmoticonIcon className="mr-2 ml-1" />
+            <MdInsertEmoticon className="mr-2 ml-1" />
             {commentLoading ? (
               <button className="font-semibold text-blue-400">
                 <svg
@@ -422,7 +437,7 @@ const HomePost: React.FC<HomePostProps> = ({
       <div hidden>
         <Comments id={id} setCommentsLength={setCommentsLength} />
       </div>
-    </div>
+    </motion.div>
   );
 };
 export default HomePost;

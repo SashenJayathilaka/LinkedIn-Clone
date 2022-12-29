@@ -1,12 +1,16 @@
 import { Image, Input } from "@chakra-ui/react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import HomeIcon from "@material-ui/icons/Home";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import MessageIcon from "@material-ui/icons/Message";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import PeopleIcon from "@material-ui/icons/People";
-import WorkIcon from "@material-ui/icons/Work";
 import React from "react";
+
+import { RiAccountCircleFill } from "react-icons/ri";
+import {
+  AiFillHome,
+  AiOutlineUnorderedList,
+  AiFillMessage,
+} from "react-icons/ai";
+import { IoMdNotifications } from "react-icons/io";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { MdWork } from "react-icons/md";
+
 import HomeHeaderLink from "./HomeHeaderLink";
 
 type HomeHeaderProps = {};
@@ -30,19 +34,19 @@ const HomeHeader: React.FC<HomeHeaderProps> = () => {
         </div>
         <div className="flex items-center sm:divide-x divide-gray-300">
           <div className="hidden sm:flex space-x-8 pr-4">
-            <HomeHeaderLink Icon={HomeIcon} text="Home" />
-            <HomeHeaderLink Icon={PeopleIcon} text="Network" />
-            <HomeHeaderLink Icon={WorkIcon} text="Jobs" />
-            <HomeHeaderLink Icon={MessageIcon} text="Messaging" />
+            <HomeHeaderLink Icon={AiFillHome} text="Home" />
+            <HomeHeaderLink Icon={BsFillPeopleFill} text="Network" />
+            <HomeHeaderLink Icon={MdWork} text="Jobs" />
+            <HomeHeaderLink Icon={AiFillMessage} text="Messaging" />
             <div className="relative">
-              <HomeHeaderLink Icon={NotificationsIcon} text="Notification" />
+              <HomeHeaderLink Icon={IoMdNotifications} text="Notification" />
               <div className="absolute -top-2 right-3 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-ping text-white">
                 3
               </div>
             </div>
-            <HomeHeaderLink Icon={AccountCircleIcon} text="Me" />
+            <HomeHeaderLink Icon={RiAccountCircleFill} text="Me" />
             <span className="hidden lg:inline-flex h-0.5 w-[calc(100%+20px)] bg-black dark:bg-white rounded-t-full" />
-            <HomeHeaderLink Icon={ListAltIcon} text="Work" />
+            <HomeHeaderLink Icon={AiOutlineUnorderedList} text="Work" />
           </div>
         </div>
       </header>
