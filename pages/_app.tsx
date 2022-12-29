@@ -1,17 +1,15 @@
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
-import { RecoilRoot } from "recoil";
+import { SessionProvider } from "next-auth/react";
 import { theme } from "../chakra/theme";
-import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <RecoilRoot>
+    <SessionProvider session={pageProps.session}>
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
-    </RecoilRoot>
+    </SessionProvider>
   );
 }
-
-export default MyApp;

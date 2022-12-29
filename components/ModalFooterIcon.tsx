@@ -13,14 +13,17 @@ import {
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import DescriptionIcon from "@material-ui/icons/Description";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import PhotoIcon from "@material-ui/icons/Photo";
-import SportsSoccerIcon from "@material-ui/icons/SportsSoccer";
-import WorkIcon from "@material-ui/icons/Work";
-import YouTubeIcon from "@material-ui/icons/YouTube";
 import React, { useRef } from "react";
+
+import { BsFillBarChartFill } from "react-icons/bs";
+import {
+  MdDescription,
+  MdMoreHoriz,
+  MdSportsBaseball,
+  MdWork,
+} from "react-icons/md";
+import { IoMdPhotos } from "react-icons/io";
+import { GrYoutube } from "react-icons/gr";
 
 type ModalFooterIconProps = {
   communityType: string;
@@ -41,53 +44,53 @@ const ModalFooterIcon: React.FC<ModalFooterIconProps> = ({
     <>
       <Flex gap={2}>
         <Icon
-          as={PhotoIcon}
+          as={IoMdPhotos}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
           onClick={onOpen}
         />
 
         <Icon
-          as={YouTubeIcon}
+          as={GrYoutube}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
 
         <Icon
-          as={DescriptionIcon}
+          as={MdDescription}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
 
         <Icon
-          as={WorkIcon}
+          as={MdWork}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
 
         <Icon
-          as={SportsSoccerIcon}
+          as={MdSportsBaseball}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
 
         <Icon
-          as={BarChartIcon}
+          as={BsFillBarChartFill}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
 
         <Icon
-          as={MoreHorizIcon}
+          as={MdMoreHoriz}
           color="gray.600"
           cursor="pointer"
-          className="hover:bg-gray-300 rounded-md"
+          className="hover:bg-gray-300 rounded-md text-xl"
         />
         <div style={{ borderLeft: "2px solid gray", marginLeft: "20px" }}></div>
         <Button
