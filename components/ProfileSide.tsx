@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import { BsFillBookmarkStarFill } from "react-icons/bs";
-import { auth } from "../firebase/firebase";
 
 type ProfileSideProps = {};
 
